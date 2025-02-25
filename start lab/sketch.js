@@ -14,7 +14,7 @@ function preload(){
 }
  
 function setup(){
-    createCanvas(5000,3000);
+    createCanvas(2000,2000);
     angleMode(DEGREES);
     noLoop();
     cleanDataFunction1();
@@ -128,13 +128,13 @@ let barChart7 = {
   data: cleanData1,
  xValue: "Age_Group",
 yValues: ["Female", "Male"],
-chartX: 0,
-chartY:500,
-chartHeight:300,
-chartWidth: 300,
-chartTitle: "Japan yaya Population",
+chartX: 500,
+chartY:700,
+chartHeight:500,
+chartWidth: 500,
+chartTitle: "Japan Population",
 chartType: "populationpyramid",
-barColour1: color(0,255,0),
+barColour1: color(255,0,0),
 barColour2: color(0,0,255)
 
 };
@@ -151,14 +151,14 @@ barColour2: color(0,0,255)
     
 
 
- //charts.push(new BarChart(barChart1));
+ //charts.push(new BarChart(verticalChart1));
 //charts.push(new BarChart(barChart2));
  //charts.push(new BarChart(barChart3));
  //charts.push(new BarChart(barChart4));
 // charts.push(new BarChart(barChart5));
 //charts.push(new BarChart(barChart6));
 //charts.push(new PopulationPyramid(barChart7));
-//charts.push(new BarChart(barChart7));
+charts.push(new BarChart(barChart7));
 
 
 

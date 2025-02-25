@@ -73,23 +73,27 @@ class BarChart {
         this.chartTitle = obj.chartTitle || "Japan Population";
         this.titleXOffset = obj.titleXOffset || this.chartWidth / 2;
         this.titleYOffset = obj.titleYOffset || this.chartHeight + this.chartHeight / 10;
-        this.titleSize = obj.titleSize || 16;
-        this.titleColour = obj.titleColour || color(64, 235, 52);
+        this.titleSize = obj.titleSize || 20;
+        this.titleColour = obj.titleColour || color(0);
         
 
         //Data Label Properties
         this.verticalBarDataLabelRotation = obj.verticalBarDataLabelRotation || 90
         this.horizontlBarDataLabelRotation = obj.horizontlBarDataLabelRotation || 0
-        this.dataLabelTextSize = obj.dataLabelTextSize || 10;
+        this.dataLabelTextSize = obj.dataLabelTextSize || 15;
         this.dataLabelColour = obj.dataLabelColour || color(0);
         
 
         //Axis Label Properties
         this.axisLabelRotation = obj.axisLabelRotation || 90;
-        this.axisLabelTextSize = obj.axisLabelTextSize || 10;
+        this.axisLabelTextSize = obj.axisLabelTextSize || 20;
         this.axisLabelColour = obj.axisLabelColour || color(0);
         this.axisLabelName1 = obj.axisLabelName1 || "Population"
         this.axisLabelName2 = obj.axisLabelName2 || "Age Group"
+
+
+        //Legend Label Properties
+        this.legendLabelTextSize = obj.legendLabelTextSize || 15
     }
 
 
@@ -132,7 +136,7 @@ class BarChart {
 
     renderLegend(){
         push();
-        textSize(this.titleSize);
+        textSize(this.legendLabelTextSize);
         textAlign(CENTER, TOP);
         
         let legendTextX = this.chartWidth - -this.chartWidth / 5;
