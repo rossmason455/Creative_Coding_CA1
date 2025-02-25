@@ -42,17 +42,18 @@ function setup(){
 
     //Normal Barchart 2
     let verticalChart2 = {
-      data: cleanData2,
-     xValue: "Prefecture",
+    data: cleanData2,
+    xValue: "Prefecture",
     yValues: ["Population"],
-    chartX: 600,
-    chartY:500,
-    chartHeight:300,
-    chartWidth: 300,
+    chartX: 300,
+    chartY:700,
+    chartHeight:500,
+    chartWidth: 500,
     barWidth: 20,
-    chartTitle: "Japan Population by Prefecture",
+    chartTitle: "Japan Population by Prefecture - 2023",
+    axisLabelName2: "Prefecture",
     chartType: "normal",
-    barColour1: color(0,255,0)
+    barColour1: color(252, 157, 3)
 };
 
 
@@ -62,81 +63,82 @@ let horizontalChart1 = {
 data: cleanData1,
 xValue: "Age_Group",
 yValues: ["Female"],
-chartX: 600,
-chartY:500,
+chartX: 300,
+    chartY:700,
 chartHeight:500,
 chartWidth: 500,
 barWidth: 20,
-chartTitle: "Japan Population",
+chartTitle: "Japan Female Population - 2020",
 chartType: "ybars",
-barColour1: color(0,0,255)
+barColour1: color(25, 111, 250)
 };
 
 //Horizontal Barchart 2
-let barChart4 = {
+let horizontalChart2 = {
   data: cleanData1,
  xValue: "Age_Group",
 yValues: ["Male"],
-chartX: 1800,
-chartY:500,
-chartHeight:300,
-chartWidth: 300,
-chartTitle: "Japan Population",
+chartX: 300,
+    chartY:700,
+chartHeight:500,
+chartWidth: 500,
+barWidth: 20,
+chartTitle: "Japan Male Population - 2020",
 chartType: "ybars",
-barColour1: color(0,255,0)
+barColour1: color(252, 157, 3)
 };
 
 
 //Stacked Barchart 
-let barChart5 = {
+let stackedChart = {
   data: cleanData1,
  xValue: "Age_Group",
 yValues: ["Female", "Male"],
-chartX: 1200,
-chartY:500,
+chartX: 300,
+    chartY:700,
 chartHeight:500,
 chartWidth: 500,
 barWidth: 20,
-chartTitle: "Japan Male Population",
+chartTitle: "Japan Census - 2020",
 chartType: "stacked",
-barColour1: color(0,255,0),
-barColour2: color(0,0,255)
+barColour1: color(235, 12, 12),
+barColour2: color(12, 97, 235)
 
 };
 
 
 //100% Barchart
-let barChart6 = {
+let oneHundredPercent = {
   data: cleanData1,
  xValue: "Age_Group",
 yValues: ["Female", "Male"],
-chartX: 1800,
-chartY:500,
+chartX: 300,
+    chartY:700,
 chartHeight:500,
 chartWidth: 500,
 barWidth: 20,
-chartTitle: "Japan Male Population",
+chartTitle: "Japan Census 2020 by Percentage",
 chartType: "100",
-barColour1: color(0,255,0),
-barColour2: color(0,0,255)
+barColour1: color(235, 12, 12),
+barColour2: color(12, 97, 235)
 
 };
 
 
 //Population Pyramid
-let barChart7 = {
+let populationPyramid = {
   data: cleanData1,
  xValue: "Age_Group",
 yValues: ["Female", "Male"],
-chartX: 500,
-chartY:700,
+chartX: 300,
+    chartY:700,
 chartHeight:500,
 chartWidth: 500,
-chartTitle: "Japan Population",
+chartTitle: "Japan Census - 2020",
 chartType: "populationpyramid",
-barColour1: color(255,0,0),
-barColour2: color(0,0,255)
 
+barColour1: color(235, 12, 12),
+barColour2: color(12, 97, 235)
 };
 
 
@@ -152,13 +154,12 @@ barColour2: color(0,0,255)
 
 
  //charts.push(new BarChart(verticalChart1));
-//charts.push(new BarChart(barChart2));
- //charts.push(new BarChart(barChart3));
- //charts.push(new BarChart(barChart4));
-// charts.push(new BarChart(barChart5));
-//charts.push(new BarChart(barChart6));
-//charts.push(new PopulationPyramid(barChart7));
-charts.push(new BarChart(barChart7));
+//charts.push(new BarChart(verticalChart2));
+ //charts.push(new BarChart(horizontalChart1));
+ //charts.push(new BarChart(horizontalChart2));
+//charts.push(new BarChart(stackedChart));
+charts.push(new BarChart(oneHundredPercent));
+//Charts.push(new BarChart(populationPyramid));
 
 
 

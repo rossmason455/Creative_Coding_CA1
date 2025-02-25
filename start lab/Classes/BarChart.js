@@ -78,7 +78,7 @@ class BarChart {
         
 
         //Data Label Properties
-        this.verticalBarDataLabelRotation = obj.verticalBarDataLabelRotation || 90
+        this.verticalBarDataLabelRotation = obj.verticalBarDataLabelRotation || 60
         this.horizontlBarDataLabelRotation = obj.horizontlBarDataLabelRotation || 0
         this.dataLabelTextSize = obj.dataLabelTextSize || 15;
         this.dataLabelColour = obj.dataLabelColour || color(0);
@@ -86,7 +86,7 @@ class BarChart {
 
         //Axis Label Properties
         this.axisLabelRotation = obj.axisLabelRotation || 90;
-        this.axisLabelTextSize = obj.axisLabelTextSize || 20;
+        this.axisLabelTextSize = obj.axisLabelTextSize || 18;
         this.axisLabelColour = obj.axisLabelColour || color(0);
         this.axisLabelName1 = obj.axisLabelName1 || "Population"
         this.axisLabelName2 = obj.axisLabelName2 || "Age Group"
@@ -94,6 +94,7 @@ class BarChart {
 
         //Legend Label Properties
         this.legendLabelTextSize = obj.legendLabelTextSize || 15
+        this.legendLabelTextColour = obj.legendLabelTextColour || color(0)
     }
 
 
@@ -146,6 +147,7 @@ class BarChart {
             fill(this.barColours[i]);
             rect(legendTextX - legendTextX / 10, legendTextY + (legendTextY / 20) * i, 10, 10);
             noStroke();
+            fill(this.legendLabelTextColour)
             text(this.yValues[i], legendTextX, legendTextY + (legendTextY / 20) * i);
         }
         
@@ -517,7 +519,7 @@ class BarChart {
                 noStroke();
                 fill(this.barColours[j])
                 rect (xPos,0,this.barWidth, -this.data[i][this.yValues[j]]*this.scalerStackedBars);
-                translate(0,-this.data[i][this.yValues[j]]*this.scalerStackedBars - 1)
+                translate(0,-this.data[i][this.yValues[j]]*this.scalerStackedBars)
             
                
             }
