@@ -85,7 +85,7 @@ class BarChart {
         
 
         //Axis Label Properties
-        this.axisLabelRotation = obj.axisLabelRotation || 90;
+        this.axisLabelRotation = obj.axisLabelRotation || -90;
         this.axisLabelTextSize = obj.axisLabelTextSize || 18;
         this.axisLabelColour = obj.axisLabelColour || color(0);
         this.axisLabelName1 = obj.axisLabelName1 || "Population"
@@ -102,7 +102,7 @@ class BarChart {
         push();
         
         translate(this.chartX, this.chartY);  
-
+        //Render methods
         this.renderAxis();  
         this.renderLabels(); 
         this.renderTitle();
@@ -140,14 +140,17 @@ class BarChart {
         textSize(this.legendLabelTextSize);
         textAlign(CENTER, TOP);
         
+        // Positioning for legend items
         let legendTextX = this.chartWidth - -this.chartWidth / 5;
         let legendTextY = -this.chartHeight - -this.chartHeight / 10;
         
         for (let i = 0; i < this.yValues.length; i++) {
             fill(this.barColours[i]);
+            // Draw a small colored square for each legend item
             rect(legendTextX - legendTextX / 10, legendTextY + (legendTextY / 20) * i, 10, 10);
             noStroke();
             fill(this.legendLabelTextColour)
+            // Draw corresponding legend text
             text(this.yValues[i], legendTextX, legendTextY + (legendTextY / 20) * i);
         }
         
@@ -156,39 +159,42 @@ class BarChart {
 
     renderLabels() {
         
+
+        // Rendering Number Labels
+       
         let yPos;
         let jump = this.chartHeight / this.numTicks;
-     
+        // Calculate maximum Y value and the jump for label positioning
         let maxY = max(this.data.map(row => row[this.yValues[0]]));
         let ylabelJump = maxY / this.numTicks;
-
-       
-   
+        
+        // Loop through each tick to render the labels
         for (let i = 0; i <= this.numTicks; i++) {
             
-            yPos = jump * i;
-            let yLabel = ylabelJump * i;
+            yPos = jump * i; // Calculate Y position for each label
+            let yLabel = ylabelJump * i; // Calculate the label value for each tick
        
-
+            // Handle rendering for 100% stacked charts
             if(this.chartType === "100"){
-                let yLabel = (i / this.numTicks) * 100; 
-                let formattedLabel = yLabel.toFixed(0) + '%'; 
+                let yLabel = (i / this.numTicks) * 100; // Calculate percentage label for 100% chart
+                let formattedLabel = yLabel.toFixed(0) + '%'; // Format label with percentage symbol
                 noStroke();
                 textSize(this.dataLabelTextSize)
                 fill(this.dataLabelColour);
-                text(formattedLabel, -30, -yPos); 
+                text(formattedLabel, -30, -yPos); // Render the label
                 
                 push();
                 
                 textAlign(CENTER)
                 textSize(this.axisLabelTextSize)
-                translate(-this.chartWidth/5, -this.chartHeight/2)
+                translate(-this.chartWidth/5, -this.chartHeight/2) // Position axis label
                 rotate(-90)
                 noStroke();
                 fill(this.axisLabelColour)
-                text(this.axisLabelName1,0,0)
+                text(this.axisLabelName1,0,0) // Render axis label
                 pop();
-             }
+             } 
+             // Handle rendering for Y-bar chart type
             else if (this.chartType === "ybars"){
                 
                 
@@ -199,9 +205,9 @@ class BarChart {
                 push();
                     
                 fill(this.dataLabelColour);
-                translate(yPos, 20); 
+                translate(yPos, 20); // Position Y-bar label
                 rotate(this.horizontalBarDataLabelRotation);
-                text(formattedLabel, 0, 0); 
+                text(formattedLabel, 0, 0); // Render the label
                 pop();
                 
                 push();
@@ -209,14 +215,14 @@ class BarChart {
                 textSize(this.axisLabelTextSize);
                 translate(this.chartWidth / 2, this.chartHeight / 8); // Adjust axis label position
                 fill(this.axisLabelColour)
-                text(this.axisLabelName1, 0, 0);
+                text(this.axisLabelName1, 0, 0); // Position axis label
                 pop();
                 
             
                 
-    
+            // Handle rendering for stacked bar chart type
             } else if(this.chartType === "stacked"){
-                let formattedLabel = ((yLabel * 2) / 1000000).toFixed(0) + 'M';
+                let formattedLabel = ((yLabel * 2) / 1000000).toFixed(0) + 'M'; // Format label in millions
                 noStroke();
                 textSize(this.dataLabelTextSize)
                 fill(this.dataLabelColour);
@@ -234,14 +240,17 @@ class BarChart {
             }
 
 
-
+            // Handle rendering for population pyramid chart type
             else if(this.chartType === "populationpyramid"){
                 let maxPop = Math.max(...this.data.map(row => row[this.yValues[0]] + row[this.yValues[1]]));  
-                let scaleFactor = maxPop / 10;  
+                let scaleFactor = maxPop / 10;  // Scale population values
                 
                 
                 let labels = [];
+                // Loop to create label values for the population pyramid chart, using a scaled range of values.
                 for (let i = -6; i <= 6; i += 2) {
+                    // Multiply the loop index by the scaleFactor to adjust for the chart's scale
+    // Push the result into the 'labels' array. These will be the values shown on the X-axis.
                     labels.push(i * scaleFactor);  
                 }
                 
@@ -254,7 +263,7 @@ class BarChart {
                     push();
                     noStroke();  
                     fill(this.dataLabelColour);
-                    
+                    // Format the label value with "M" suffix for millions
                     let formattedLabel = labels[i] === 0 ? '0' : (Math.abs(labels[i]) / 1000000).toFixed(0) + 'M';
                     
              
@@ -281,6 +290,7 @@ class BarChart {
 
                 }
             }
+            // Default rendering for other chart types
             else {
                 let formattedLabel = (yLabel / 1000000).toFixed(0) + 'M';
                 noStroke();
@@ -301,7 +311,7 @@ class BarChart {
                
              }
             
-         
+             // Draw ticks at every position except for the first (to avoid overlap with the axis)
             if(i != 0) {
                 strokeWeight(1);
                 stroke(240);
@@ -309,22 +319,37 @@ class BarChart {
             }
 
       
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           
+           // Rendering text labels
+           // Calculate the x-position for each label in correspondence with the positioning of the bars
             for (let i = 0; i < this.data.length; i++) {
             let xPos = (this.barWidth + this.gap) * i;    
             
+            // Check if the chart type is either "ybars" or "populationpyramid"
             if(this.chartType === "ybars" || this.chartType === "populationpyramid" ){ 
                 
                 noStroke();
                 textSize(this.dataLabelTextSize);
                 
                 fill(this.dataLabelColour);
+                 // Render the label for the x-value at a specific position
                 text(this.data[i][this.xValue], -this.chartWidth/8, -xPos -this.margin * 2); 
                 push();
                 textAlign(CENTER)
                 textSize(this.axisLabelTextSize)
                 
                 translate(-this.chartWidth/4, -this.chartHeight/2)
-                rotate(-90)
+                rotate(this.axisLabelRotation)
                 fill(this.axisLabelColour)
                 text(this.axisLabelName2,0,0)
                 pop();
@@ -369,92 +394,10 @@ class BarChart {
 
     
 
-//
-    //renderBars() {
-    //    if(this.chartType === "ybars"){
-    //        translate(0, -this.margin) 
-    //        console.log("this is margin", this.margin)
-    //    } else{
-    //        translate(this.margin,0)
-    //    }
-    //    
-//
-    //    
-    //    for (let i = 0; i < this.data.length; i++) {
-    //        let xPos = (this.barWidth + this.gap) * i;
-//
-//
-    //       
-//
-    //        if (this.chartType === "normal") {
-    //            this.renderNormalBar(xPos, i);
-    //            
-    //        } else if (this.chartType === "ybars") {
-    //           
-    //            this.renderYBar(xPos, i);
-    //           
-    //           
-    //           
-    //        } else if (this.chartType === "stacked") {
-    //            this.renderStackedBar(xPos, i);
-    //            
-    //        } else if (this.chartType === "100") {
-    //            this.renderBar100(xPos, i);
-    //            
-    //        }
-    //    
-    //    
-    //    }
-    //}
-//
-    //renderNormalBar(xPos, i) {
-    //    fill(this.barColour1);
-    //    noStroke();
-    //    rect(xPos, 0, this.barWidth, -this.data[i][this.yValue1] * this.scalerNormalBars);
-    //}
-//
-    //renderYBar(xPos, i) {
-    //    fill(this.barColour1);
-    //    noStroke();
-    //    rect(0, -xPos - this.barWidth, this.data[i][this.yValue1] * this.scalerNormalBars, this.barWidth);
-    //}
-//
-    //renderStackedBar(xPos, i) {
-    //    fill(this.barColour1);
-    //    noStroke();
-    //    rect(xPos, 0, this.barWidth, -this.data[i][this.yValue1] * this.scalerStackedBars);
-    //    
-    //    push();
-    //    fill(255, 100, 50);
-    //    rect(xPos, -this.data[i][this.yValue1] * this.scalerStackedBars, this.barWidth, -this.data[i][this.yValue2] * this.scalerStackedBars);
-    //    pop();
-    //}
-//
-    //renderBar100(xPos, i) {
-    //    let firstValue = this.data[i][this.yValue1];
-    //    let secondValue = this.data[i][this.yValue2];
-    //    let totalValue = firstValue + secondValue;
-//
-    //    let firstPercent = (firstValue / totalValue) * 100;
-    //    let secondPercent = (secondValue / totalValue) * 100;
-//
-    //    let firstHeight = firstPercent * this.scalerBars100;
-    //    let secondHeight = secondPercent * this.scalerBars100;
-//
-    //    fill(this.barColour1);
-    //    noStroke();
-    //    rect(xPos, 0, this.barWidth, -firstHeight);
-//
-    //    push();
-    //    fill(255, 0, 0);
-    //    rect(xPos, -firstHeight, this.barWidth, -secondHeight);
-    //    pop();
-    //}
-
 
     renderBars() {
 
-
+        // Render different bar types depending on user input
         if (this.chartType === "normal"){
             this.renderNormalBar();
         }
@@ -477,14 +420,18 @@ class BarChart {
     renderNormalBar() {
         translate(this.margin,0)
 
+        // Loop through the data to render each bar
         for (let i = 0; i < this.data.length; i++) {
+            
+            // Calculate the X position for each bar, adding gap between them
             let xPos = (this.barWidth + this.gap) * i;
-
-
+            // Loop through each y-value for bar colour
             for(let j=0; j<this.yValues.length; j++){
+                // Set the color for the current section of the bar
                 fill(this.barColours[j]);
                 console.log(this.barColours[j])
                 noStroke();
+                // Draw the bar using the data value, scaling the height based on scalerNormalBars
                 rect(xPos, 0, this.barWidth, -this.data[i][this.yValues[j]] * this.scalerNormalBars);
             }
 
@@ -493,13 +440,14 @@ class BarChart {
 
     renderYBar() {
         translate(0, -this.margin) 
-
+        // Loop for bar position
         for (let i = 0; i < this.data.length; i++) {
             let xPos = (this.barWidth + this.gap) * i;
-
+            // Loop for bar color
            for (let j =0; j<this.yValues.length; j++){
             fill(this.barColours[j]);
             noStroke();
+             // Draw the Y-bar using the data value, scaling the width based on scalerNormalBars, swapping x and y values for horizontal bars
             rect(0, -xPos - this.barWidth, this.data[i][this.yValues[j]] * this.scalerNormalBars, this.barWidth);
             console.log(this.yValues[j])
            }
@@ -515,10 +463,14 @@ class BarChart {
 
 
             push();
+            // Loop through each y-value for the current bar (stacking multiple sections of the bar)
             for(let j = 0; j < this.yValues.length; j++){
                 noStroke();
                 fill(this.barColours[j])
+                // Draw the current section of the stacked bar using the data value,
+                // scaling the height based on scalerStackedBars
                 rect (xPos,0,this.barWidth, -this.data[i][this.yValues[j]]*this.scalerStackedBars);
+                // Move the drawing origin up by the height of the current section to stack the next one
                 translate(0,-this.data[i][this.yValues[j]]*this.scalerStackedBars)
             
                
@@ -532,53 +484,48 @@ class BarChart {
         translate(this.margin,0)
         for (let i = 0; i < this.data.length; i++) {
             let xPos = (this.barWidth + this.gap) * i;
+            // Retrieve the first and second values from yValues
             let firstValue = this.data[i][this.yValues[0]];
             let secondValue = this.data[i][this.yValues[1]];
+             // Calculate the total value for the bar
             let totalValue = firstValue + secondValue;
+            // Initialize the Y offset (used to stack the bars)
             let yOffset = 0; 
 
-    push();
+         // Loop through each yValue (stacking bars)
         for (let j = 0; j < this.yValues.length; j++) {
+         // Get the current value and calculate its percentage of the total
         let value = this.data[i][this.yValues[j]];
         let percent = (value / totalValue) * 100;
+        // Calculate the height of the bar based on the percentage
         let barHeight = percent * this.scalerBars100; 
 
         fill(this.barColours[j]);
         noStroke();
+         // Draw the current section of the bar using the calculated height
         rect(xPos, -yOffset, this.barWidth, -barHeight);
-
+        // Update the Y offset to stack the next bar section on top
         yOffset += barHeight; 
     }
-
-
-  
-
-        
-
-
-
-        //fill(this.barColour1);
-        //noStroke();
-        //rect(xPos, 0, this.barWidth, -firstHeight);
-//
-        //push();
-        //fill(255, 0, 0);
-        //rect(xPos, -firstHeight, this.barWidth, -secondHeight);
-        //pop();
-    }
+   
+}
 }
 
 renderBarPopulationPyramid(){
     for (let i = 0; i < this.data.length; i++) {
+        // Calculate the Y position for each bar
         let yPos = -i * this.barHeight - this.barHeight;
         
-        
+         // Loop through each yValue (to handle multiple data columns)
         for (let j =0; j<this.yValues.length; j++){
             noStroke();
             fill(this.barColours[j])
+            // Create a positioner array for the bar postioning: 
+            // one for positive values and one for negative values (for pyramid effect)
             let positioner = [this.data[i][this.yValues[j]], -this.data[i][this.yValues[j]]]
+            // Draw the bar using rect() with the scaled width and the height for the pyramid bars
             rect(this.chartWidth /2, yPos,positioner[j] * this.scalerPopulationPyramid, this.barHeight);
-            console.log(this.scalerPopulationPyramid)
+           
            
            
         }
