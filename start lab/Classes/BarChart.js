@@ -169,7 +169,7 @@ class BarChart {
         textAlign(CENTER);
         textSize(this.axisLabelTextSize);
         translate(-this.chartWidth / 5, -this.chartHeight / 2); // Position axis label
-        rotate(-90);
+        rotate(this.axisLabelRotation);
         noStroke();
         fill(this.axisLabelColour);
         text(this.axisLabelName1, 0, 0); // Render axis label
@@ -209,7 +209,7 @@ class BarChart {
         textAlign(CENTER);
         textSize(this.axisLabelTextSize);
         translate(-this.chartWidth / 5, -this.chartHeight / 2);
-        rotate(-90);
+        rotate(this.axisLabelRotation);
         noStroke();
         fill(this.axisLabelColour);
         text(this.axisLabelName1, 0, 0);
@@ -256,7 +256,7 @@ class BarChart {
           textSize(this.axisLabelTextSize);
 
           translate(this.chartWidth / 2, 0 - -this.chartHeight / 8);
-          rotate(0);
+          
           noStroke();
           fill(this.axisLabelColour);
           text(this.axisLabelName1, 0, 0);
@@ -275,7 +275,7 @@ class BarChart {
         textAlign(CENTER);
         textSize(this.axisLabelTextSize);
         translate(-this.chartWidth / 5, -this.chartHeight / 2);
-        rotate(-90);
+        rotate(this.axisLabelRotation);
         noStroke();
         fill(this.axisLabelColour);
         text(this.axisLabelName1, 0, 0);
@@ -296,19 +296,13 @@ class BarChart {
 
         // Check if the chart type is either "horizontal" or "populationpyramid"
         if (
-          this.chartType === "horizontal" ||
-          this.chartType === "populationpyramid"
-        ) {
+          this.chartType === "horizontal" || this.chartType === "populationpyramid") {
           noStroke();
           textSize(this.dataLabelTextSize);
 
           fill(this.dataLabelColour);
           // Render the label for the x-value at a specific position
-          text(
-            this.data[i][this.xValue],
-            -this.chartWidth / 8,
-            -xPos - this.margin * 2
-          );
+          text(this.data[i][this.xValue],-this.chartWidth / 8,-xPos - this.margin * 2);
           push();
           textAlign(CENTER);
           textSize(this.axisLabelTextSize);
@@ -465,10 +459,6 @@ class BarChart {
         let positioner = [this.data[i][this.yValues[j]],-this.data[i][this.yValues[j]]];
         // Draw the bar using rect() with the scaled width and the height for the pyramid bars
         rect(this.chartWidth / 2,yPos,positioner[j] * this.scalerPopulationPyramid,this.barHeight);
-        push();
-        translate(positioner[j], yPos)
-        text(this.data[i][this.yValues[j]], 0, 0)
-        pop();
       }
     }
   }
