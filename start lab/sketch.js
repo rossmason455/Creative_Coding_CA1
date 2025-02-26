@@ -3,13 +3,13 @@ let data2;
 let cleanData1 = [];
 let cleanData2 = [];
 let charts = [];
-
+let montserratFont;
 let robotoFont;
 
 function preload() {
   data1 = loadTable("data/japan_population_data.csv", "csv", "header");
   data2 = loadTable("data/japan_population_prefecture_data.csv", "csv", "header");
-  //robotoFont = loadFont('assets/Montserrat/static/Montserrat-SemiBold.ttf'); 
+  //MontserratFont = loadFont('assets/Montserrat/static/Montserrat-SemiBold.ttf'); 
    robotoFont = loadFont('assets/Roboto/static/Roboto-Regular.ttf'); 
   
 }
@@ -17,9 +17,9 @@ function preload() {
 function setup() {
 
   console.log("this is roboto", robotoFont);
-  createCanvas(2000, 2000);
+  createCanvas(4000, 2000);
 
- textFont(robotoFont)
+ textFont(robotoFont);
   
   angleMode(DEGREES);
   noLoop();
@@ -51,13 +51,13 @@ function setup() {
     data: cleanData1,
     xValue: "Age_Group",
     yValues: ["Male"],
-    chartX: 300,
+    chartX: 200,
     chartY: 700,
     chartHeight: 500,
     chartWidth: 500,
     barWidth: 20,
     chartTitle: "Japan Male Population",
-    chartType: "normal",
+    chartType: "vertical",
     barColour1: color(25, 111, 250),
   };
 
@@ -66,14 +66,14 @@ function setup() {
     data: cleanData2,
     xValue: "Prefecture",
     yValues: ["Population"],
-    chartX: 300,
+    chartX: 1000,
     chartY: 700,
     chartHeight: 500,
     chartWidth: 500,
     barWidth: 20,
     chartTitle: "Japan Population by Prefecture - 2023",
     axisLabelName2: "Prefecture",
-    chartType: "normal",
+    chartType: "vertical",
     barColour1: color(252, 157, 3),
   };
 
@@ -82,13 +82,13 @@ function setup() {
     data: cleanData1,
     xValue: "Age_Group",
     yValues: ["Female"],
-    chartX: 300,
+    chartX: 1800,
     chartY: 700,
     chartHeight: 500,
     chartWidth: 500,
     barWidth: 20,
     chartTitle: "Japan Female Population - 2020",
-    chartType: "ybars",
+    chartType: "horizontal",
     barColour1: color(25, 111, 250),
   };
 
@@ -97,14 +97,14 @@ function setup() {
     data: cleanData1,
     xValue: "Age_Group",
     yValues: ["Male"],
-    chartX: 300,
+    chartX: 2600,
     chartY: 700,
     chartHeight: 500,
     chartWidth: 500,
     barWidth: 20,
     chartTitle: "Japan Male Population - 2020",
-    chartType: "ybars",
-    barColour1: color(252, 157, 3),
+    chartType: "horizontal",
+    barColour1: color(50, 161, 55),
   };
 
   // Stacked Barchart
@@ -112,8 +112,8 @@ function setup() {
     data: cleanData1,
     xValue: "Age_Group",
     yValues: ["Female", "Male"],
-    chartX: 300,
-    chartY: 700,
+    chartX: 200,
+    chartY: 1600,
     chartHeight: 500,
     chartWidth: 500,
     barWidth: 20,
@@ -128,15 +128,15 @@ function setup() {
     data: cleanData1,
     xValue: "Age_Group",
     yValues: ["Female", "Male"],
-    chartX: 300,
-    chartY: 700,
+    chartX: 1000,
+    chartY: 1600,
     chartHeight: 500,
     chartWidth: 500,
     barWidth: 20,
     chartTitle: "Japan Census 2020 by Percentage",
     chartType: "100",
-    barColour1: color(235, 12, 12),
-    barColour2: color(12, 97, 235),
+    barColour1: color(252, 3, 73),
+    barColour2: color(252, 198, 3),
   };
 
   // Population Pyramid
@@ -144,8 +144,8 @@ function setup() {
     data: cleanData1,
     xValue: "Age_Group",
     yValues: ["Female", "Male"],
-    chartX: 300,
-    chartY: 700,
+    chartX: 1800,
+    chartY: 1600,
     chartHeight: 500,
     chartWidth: 500,
     chartTitle: "Japan Census - 2020",
@@ -154,44 +154,47 @@ function setup() {
     barColour2: color(12, 97, 235),
   };
 
-  //charts.push(new BarChart(verticalChart1));
-  //charts.push(new BarChart(verticalChart2));
-  //charts.push(new BarChart(horizontalChart1));
-  //charts.push(new BarChart(horizontalChart2));
-  //charts.push(new BarChart(stackedChart));
-  //charts.push(new BarChart(oneHundredPercent));
+
+// Uncomment 2 at a time
+
+ charts.push(new BarChart(verticalChart1));
+  charts.push(new BarChart(verticalChart2));
+ charts.push(new BarChart(horizontalChart1));
+  charts.push(new BarChart(horizontalChart2));
+  charts.push(new BarChart(stackedChart));
+  charts.push(new BarChart(oneHundredPercent));
   charts.push(new BarChart(populationPyramid));
-}
+};
 
 function draw() {
   background(255);
 
   charts.forEach((chart) => chart.render());
-}
+};
 
 // Push data sets from csv files into arrays and parse the them
 function cleanDataFunction1() {
   for (let i = 0; i < data1.rows.length; i++) {
     cleanData1.push(data1.rows[i].obj);
-  }
+  };
 
   for (let i = 0; i < cleanData1.length; i++) {
     cleanData1[i].Female = parseInt(cleanData1[i].Female);
     cleanData1[i].Male = parseInt(cleanData1[i].Male);
 
     console.log(cleanData1[i].Male);
-  }
-}
+  };
+};
 
 function cleanDataFunction2() {
   for (let i = 0; i < data2.rows.length; i++) {
     cleanData2.push(data2.rows[i].obj);
-  }
+  };
 
   for (let i = 0; i < cleanData2.length; i++) {
     cleanData2[i].Female = parseInt(cleanData2[i].Female);
     cleanData2[i].Male = parseInt(cleanData2[i].Male);
 
     console.log(cleanData2[i].Male);
-  }
-}
+  };
+};

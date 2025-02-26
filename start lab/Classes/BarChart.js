@@ -6,7 +6,7 @@ class BarChart {
     this.yValue1 = obj.yValue1 || null;
     this.yValue2 = obj.yValue2 || null;
     this.yValues = obj.yValues || null;
-    
+
     //Position and Size Properties
     this.chartX = obj.chartX || 200;
     this.chartY = obj.chartY || 700;
@@ -162,7 +162,7 @@ class BarChart {
         noStroke();
         textSize(this.dataLabelTextSize);
         fill(this.dataLabelColour);
-        text(formattedLabel, -30, -yPos); // Render the label
+        text(formattedLabel, -this.chartWidth/10, -yPos); // Render the label
 
         push();
 
@@ -203,7 +203,7 @@ class BarChart {
         noStroke();
         textSize(this.dataLabelTextSize);
         fill(this.dataLabelColour);
-        text(formattedLabel, -30, -yPos);
+        text(formattedLabel, -this.chartWidth/10, -yPos);
 
         push();
         textAlign(CENTER);
@@ -269,7 +269,7 @@ class BarChart {
         noStroke();
         textSize(this.dataLabelTextSize);
         fill(this.dataLabelColour);
-        text(formattedLabel, -30, -yPos);
+        text(formattedLabel, -this.chartWidth/10, -yPos);
 
         push();
         textAlign(CENTER);
@@ -386,7 +386,7 @@ class BarChart {
     }
   }
 
-  renderHorizontlBar() {
+  renderHorizontalBar() {
     translate(0, -this.margin);
     // Loop for bar position
     for (let i = 0; i < this.data.length; i++) {
@@ -465,6 +465,10 @@ class BarChart {
         let positioner = [this.data[i][this.yValues[j]],-this.data[i][this.yValues[j]]];
         // Draw the bar using rect() with the scaled width and the height for the pyramid bars
         rect(this.chartWidth / 2,yPos,positioner[j] * this.scalerPopulationPyramid,this.barHeight);
+        push();
+        translate(positioner[j], yPos)
+        text(this.data[i][this.yValues[j]], 0, 0)
+        pop();
       }
     }
   }
