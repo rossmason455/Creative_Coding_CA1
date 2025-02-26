@@ -4,29 +4,25 @@ let cleanData1 = [];
 let cleanData2 = [];
 let charts = [];
 
-//let robotoFont;
+let robotoFont;
 
 function preload() {
   data1 = loadTable("data/japan_population_data.csv", "csv", "header");
   data2 = loadTable("data/japan_population_prefecture_data.csv", "csv", "header");
- // robotoFont = loadFont('fonts/Roboto.ttf'); 
-
+  //robotoFont = loadFont('assets/Montserrat/static/Montserrat-SemiBold.ttf'); 
+   robotoFont = loadFont('assets/Roboto/static/Roboto-Regular.ttf'); 
   
 }
 
 function setup() {
 
-
+  console.log("this is roboto", robotoFont);
   createCanvas(2000, 2000);
-  //textFont('Arial')
+
+ textFont(robotoFont)
+  
   angleMode(DEGREES);
   noLoop();
-  
-  //textFont(robotoFont)
-  //fill(0);
-//textSize(50);
-//text("Hello, World!", 100, 100);
-
   cleanDataFunction1();
   cleanDataFunction2();
 

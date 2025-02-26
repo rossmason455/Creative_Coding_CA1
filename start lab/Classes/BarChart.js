@@ -6,7 +6,7 @@ class BarChart {
     this.yValue1 = obj.yValue1 || null;
     this.yValue2 = obj.yValue2 || null;
     this.yValues = obj.yValues || null;
-
+    
     //Position and Size Properties
     this.chartX = obj.chartX || 200;
     this.chartY = obj.chartY || 700;
@@ -230,6 +230,7 @@ class BarChart {
         }
 
         for (let i = 0; i < labels.length; i++) {
+          // Position labels along x axis, -1 to even out plots
           let xPos = (this.chartWidth * i) / (labels.length -1);
 
           textSize(this.dataLabelTextSize);
@@ -380,12 +381,7 @@ class BarChart {
         console.log(this.barColours[j]);
         noStroke();
         // Draw the bar using the data value, scaling the height based on scalerNormalBars
-        rect(
-          xPos,
-          0,
-          this.barWidth,
-          -this.data[i][this.yValues[j]] * this.scalerNormalBars
-        );
+        rect(xPos,0,this.barWidth,-this.data[i][this.yValues[j]] * this.scalerNormalBars);
       }
     }
   }
@@ -400,12 +396,7 @@ class BarChart {
         fill(this.barColours[j]);
         noStroke();
         // Draw the Y-bar using the data value, scaling the width based on scalerNormalBars, swapping x and y values for horizontal bars
-        rect(
-          0,
-          -xPos - this.barWidth,
-          this.data[i][this.yValues[j]] * this.scalerNormalBars,
-          this.barWidth
-        );
+        rect(0,-xPos - this.barWidth,this.data[i][this.yValues[j]] * this.scalerNormalBars,this.barWidth);
         console.log(this.yValues[j]);
       }
     }
